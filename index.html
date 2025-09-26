@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="sphere-logo" id="sphere-logo"></div>
+        </div>
+        <nav class="navbar">
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="sphere.html">3D Sphere</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <h1>Welcome to My Portfolio</h1>
+                <p>Scroll down to explore my work</p>
+            </div>
+            <div class="tiger-image">
+                <img src="assets/pigeon2.png" alt="Majestic Tiger" />
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <h2>things i do</h2>
+            <p>Creative developer passionate about 3D animations and interactive experiences.</p>
+
+            <div class="youtube-container">
+                <h3>Check Out My YouTube Channel</h3>
+                <div class="youtube-card">
+                    <a href="https://www.youtube.com/@woofwoofbby" target="_blank" rel="noopener noreferrer" class="youtube-link">
+                        <div class="youtube-icon">
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FF0000"/>
+                            </svg>
+                        </div>
+                        <div class="youtube-info">
+                            <h4>@woofwoofbby</h4>
+                            <p>Subscribe for creative content and game streams!</p>
+                            <span class="youtube-arrow">→</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="video-container">
+                <h3>Featured Work</h3>
+                <video class="about-video" controls>
+                    <source src="assets/planeflytest2.mkv" type="video/x-msvideo">
+                    <source src="assets/planeflytest2.mkv" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p class="video-caption">Demonstration video showcasing 3D animation techniques</p>
+            </div>
+        </section>
+
+        <section id="gallery" class="gallery-section">
+            <h2>My Work</h2>
+            <div class="gallery-container">
+                <div class="gallery-item">
+                    <img src="assets/bear.jpg" alt="Project 1">
+                    <h3>Project 1</h3>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/wagonwheel.png" alt="Project 2">
+                    <h3>Project 2</h3>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/caveswordlow.png" alt="Project 3">
+                    <h3>Project 3</h3>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/waterlady.png" alt="Project 4">
+                    <h3>Project 4</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div id="pyramid-container" class="pyramid-container"></div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
