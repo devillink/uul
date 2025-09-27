@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Sphere - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Prevent script.js Three.js initialization on this page
+        window.isSpherePage = true;
+    </script>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        .sphere-page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .sphere-canvas {
+            width: 100%;
+            height: 70vh;
+            max-width: 800px;
+            margin: 2rem 0;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .sphere-info {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .sphere-info h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sphere-info p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #4ecdc4;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .sphere-info h1 {
+                font-size: 2rem;
+            }
+
+            .sphere-info p {
+                font-size: 1rem;
+            }
+
+            .sphere-canvas {
+                height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="sphere-logo" id="sphere-logo"></div>
+        </div>
+        <nav class="navbar">
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#gallery">Gallery</a></li>
+                <li><a href="sphere.html" class="active">3D Sphere</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="sphere-page-container">
+        <div class="sphere-info">
+            <h1>Interactive 3D Cube</h1>
+            <p>Experience this stunning 3D cube with matte deep red finish surrounded by floating particles. The cube features subtle lighting, realistic matte materials, and elegant dripping animation.</p>
+            <p>Watch the 3D cube gently rotate and drift with a mesmerizing dripping motion while floating red and cyan particles dance around it, creating a magical atmosphere.</p>
+        </div>
+
+        <div class="sphere-canvas-container" style="position: relative;">
+            <canvas class="sphere-canvas" id="sphereCanvas"></canvas>
+            <div class="loading" id="loading">Loading 3D cube...</div>
+        </div>
+
+        <a href="index.html" class="back-button">← Back to Portfolio</a>
+    </main>
+
+    <script>
+        // Three.js scene setup
+        let scene, camera, renderer, cube, particles;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initScene();
+            initNavbar();
+        });
+
+        function initScene() {
+            // Create scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a1a);
+
+            // Create camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 0, 5);
+
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, canvas: document.getElementById('sphereCanvas') });
+            renderer.setSize(document.getElementById('sphereCanvas').clientWidth, document.getElementById('sphereCanvas').clientHeight);
+            renderer.outputEncoding = THREE.sRGBEncoding;
+
+            // Create a matte deep red procedural texture
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            // Create deep red matte base
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#8B0000');    // Deep dark red
+            gradient.addColorStop(0.5, '#DC143C');  // Crimson red
+            gradient.addColorStop(1, '#B22222');    // Fire brick red
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Add subtle matte texture pattern (no shine)
+            ctx.globalCompositeOperation = 'overlay';
+            for (let i = 0; i < 200; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const size = Math.random() * 2 + 0.5;
+
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+
+                // Use very subtle color variation for matte texture
+                const opacity = Math.random() * 0.05 + 0.02; // Very low opacity
+                ctx.fillStyle = `rgba(0, 0, 0, ${opacity})`;
+                ctx.fill();
+            }
+
+            // Add minimal color variation for depth
+            ctx.globalCompositeOperation = 'multiply';
+            for (let i = 0; i < 50; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+
+                const colorGradient = ctx.createRadialGradient(x, y, 0, x, y, 30);
+                colorGradient.addColorStop(0, 'rgba(139, 69, 19, 0.1)');  // Very subtle brown
+                colorGradient.addColorStop(1, 'rgba(139, 69, 19, 0)');
+
+                ctx.fillStyle = colorGradient;
+                ctx.beginPath();
+                ctx.arc(x, y, 30, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Create texture from canvas
+            const lensFlareTexture = new THREE.CanvasTexture(canvas);
+            lensFlareTexture.wrapS = THREE.RepeatWrapping;
+            lensFlareTexture.wrapT = THREE.RepeatWrapping;
+
+            console.log('Procedural texture created successfully');
+            console.log('Texture dimensions:', canvas.width + 'x' + canvas.height);
+
+            // Hide loading indicator
+            const loading = document.getElementById('loading');
+            if (loading) {
+                loading.style.display = 'none';
+            }
+
+
+            // Create cube geometry with proper UV mapping
+            const geometry = new THREE.BoxGeometry(2, 2, 2);
+
+            // Create material with the procedural texture (matte finish)
+            const material = new THREE.MeshStandardMaterial({
+                map: lensFlareTexture,
+                roughness: 0.8,    // High roughness for matte finish
+                metalness: 0.0     // No metalness for matte appearance
+            });
+
+            // Create cube mesh
+            cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+
+            // Create particle system
+            const particleCount = 200;
+            const particleGeometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+
+            // Create particles in a sphere around the cube
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+
+                // Random spherical distribution
+                const radius = Math.random() * 8 + 4; // Between 4-12 units from center
+                const theta = Math.random() * Math.PI * 2; // Random angle around Y axis
+                const phi = Math.random() * Math.PI; // Random angle from Y axis
+
+                positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i3 + 1] = (Math.random() - 0.5) * 6; // Random Y position
+                positions[i3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+
+                // Black particles with subtle gray variations
+                colors[i3] = 0.1 + Math.random() * 0.1;     // R: 0.1-0.2
+                colors[i3 + 1] = 0.1 + Math.random() * 0.1; // G: 0.1-0.2
+                colors[i3 + 2] = 0.1 + Math.random() * 0.1; // B: 0.1-0.2
+            }
+
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const particleMaterial = new THREE.PointsMaterial({
+                size: 0.05,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.6,
+                blending: THREE.AdditiveBlending
+            });
+
+            particles = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particles);
+
+            // Add lighting
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+
+            // Start animation
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const time = Date.now() * 0.001;  // Slow time scale
+
+            // Slow rotation for elegant movement
+            if (cube) {
+                cube.rotation.x += 0.003;  // Much slower rotation
+                cube.rotation.y += 0.005;  // Much slower rotation
+
+                // Add dripping animation (vertical floating motion)
+                const dripOffset = Math.sin(time) * 0.1;  // Subtle up/down motion
+                cube.position.y = dripOffset;
+            }
+
+            // Animate particles with floating motion
+            if (particles) {
+                // Slow rotation of entire particle system
+                particles.rotation.y += 0.001;
+                particles.rotation.x += 0.0005;
+
+                // Gentle floating motion for all particles
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < positions.length; i += 3) {
+                    // Add subtle floating motion to each particle
+                    positions[i + 1] += Math.sin(time * 0.5 + i * 0.01) * 0.001;
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+
+                // Fast opacity pulsing for dramatic effect
+                const material = particles.material;
+                material.opacity = 0.3 + Math.sin(time * 4) * 0.3;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            const canvas = document.getElementById('sphereCanvas');
+            camera.aspect = canvas.clientWidth / canvas.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        }
+
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,807 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', 'Lucida Console', Monaco, monospace;
+    line-height: 1.6;
+    color: #1F2943;
+    overflow-x: hidden;
+}
+
+/* Enhance readability with Courier New */
+h1, h2, h3 {
+    font-weight: 500;
+    letter-spacing: -0.5px;
+}
+
+.hero-section h1 {
+    font-size: 2.8rem;
+    font-weight: 450;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.about-section h2,
+.gallery-section h2 {
+    font-size: 2.1rem;
+    font-weight: 400;
+}
+
+/* Header Styles */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 1.2rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header .logo-container {
+    position: absolute;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Logo Animation Variables */
+:root {
+    --logo-spin-duration: 4s;
+    --logo-spin-intensity: 0.7;
+    --logo-spin-shadow-intensity: 0.4;
+    --logo-transition-duration: 0.3s;
+    --logo-rotation-degrees: 360deg;
+}
+
+.sphere-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3a3caa 0%, #4ecdc4 100%);
+    position: relative;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, var(--logo-spin-shadow-intensity));
+    /* Spin animation with hardware acceleration */
+    animation: logo-spin var(--logo-spin-duration) infinite linear;
+    will-change: transform;
+    /* Fallback for browsers without animation support */
+    transition: transform var(--logo-transition-duration) ease,
+               box-shadow var(--logo-transition-duration) ease;
+}
+
+
+
+.sphere-logo:hover {
+    /* Pause spin animation on hover for better UX */
+    animation-play-state: paused;
+    /* Enhanced hover state with smooth transition */
+    transform: scale(1.15) translateZ(0);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+    transition: all var(--logo-transition-duration) ease;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-toggle span {
+    width: 25px;
+    height: 3px;
+    background: #333;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 400;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.nav-menu li a:hover {
+    color: #ff6b6b;
+}
+
+.nav-menu li a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #ff6b6b;
+    transition: width 0.3s;
+}
+
+.nav-menu li a:hover::after {
+    width: 100%;
+}
+
+.nav-menu li a.active {
+    color: #ff6b6b;
+}
+
+.nav-menu li a.active::after {
+    width: 100%;
+}
+
+/* Main Content */
+.main-content {
+    margin-top: 90px;
+}
+
+.hero-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: rgba(255, 255, 255, 0.596);
+}
+
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    /* Animation removed for static content */
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    /* Animation removed for static content */
+}
+
+.tiger-image {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    z-index: 1;
+    opacity: 0.3;
+    /* Animation removed for static content */
+}
+
+.tiger-image img {
+    width: 700px;
+    height: 438px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    filter: brightness(0.8) contrast(1.1);
+}
+
+.about-section {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about-section h2 {
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.about-section p {
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #4a5568;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+/* YouTube Channel Integration */
+.youtube-container {
+    max-width: 800px;
+    margin: 3rem auto 0;
+    text-align: center;
+}
+
+.youtube-container h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    position: relative;
+}
+
+.youtube-container h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    border-radius: 2px;
+}
+
+.youtube-card {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.youtube-link {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+    color: white;
+    text-decoration: none;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.youtube-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.youtube-link:hover::before {
+    left: 100%;
+}
+
+.youtube-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.youtube-icon {
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+}
+
+.youtube-info {
+    flex: 1;
+    text-align: left;
+}
+
+.youtube-info h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: white;
+}
+
+.youtube-info p {
+    font-size: 0.95rem;
+    margin: 0;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.youtube-arrow {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.youtube-link:hover .youtube-arrow {
+    transform: translateX(5px);
+}
+
+.video-container {
+    max-width: 800px;
+    margin: 3rem auto 0;
+    text-align: center;
+}
+
+.video-container h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    position: relative;
+}
+
+.video-container h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    border-radius: 2px;
+}
+
+.about-video {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #000;
+}
+
+.about-video:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom video controls styling */
+.about-video::-webkit-media-controls {
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    border-radius: 0 0 15px 15px;
+}
+
+.about-video::-webkit-media-controls-panel {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.about-video::-webkit-media-controls-play-button,
+.about-video::-webkit-media-controls-pause-button {
+    background-color: white;
+    border-radius: 50%;
+}
+
+.about-video::-webkit-media-controls-current-time-display,
+.about-video::-webkit-media-controls-time-remaining-display {
+    color: white;
+    font-weight: 600;
+}
+
+.video-caption {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #4a5568;
+    font-style: italic;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Gallery Section */
+.gallery-section {
+    padding: 4rem 2rem;
+    background: #f8f9fa;
+}
+
+.gallery-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.gallery-item {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.gallery-item h3 {
+    padding: 1rem;
+    text-align: center;
+    color: #333;
+}
+
+/* Footer */
+.footer {
+    background: #576e85;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.pyramid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+/* Animation Utilities */
+/* Use these classes to control spin animations programmatically */
+.animation-paused {
+    animation-play-state: paused !important;
+}
+
+.animation-running {
+    animation-play-state: running !important;
+}
+
+/* Spin intensity controls */
+.spin-slow {
+    --logo-spin-duration: 6s;
+    --logo-spin-intensity: 0.4;
+    --logo-spin-shadow-intensity: 0.2;
+}
+
+.spin-fast {
+    --logo-spin-duration: 2s;
+    --logo-spin-intensity: 0.9;
+    --logo-spin-shadow-intensity: 0.6;
+}
+
+/* Enhanced Logo Spin Animation */
+@keyframes logo-spin {
+    0% {
+        /* Starting position */
+        transform: rotate(0deg) translateZ(0);
+        box-shadow: 0 4px 15px rgba(255, 107, 107, var(--logo-spin-shadow-intensity));
+    }
+    25% {
+        /* Quarter turn with enhanced glow */
+        transform: rotate(90deg) translateZ(0);
+        box-shadow: 0 6px 20px rgba(255, 107, 107, calc(var(--logo-spin-shadow-intensity) + 0.1));
+    }
+    50% {
+        /* Half turn with maximum glow */
+        transform: rotate(180deg) translateZ(0);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, var(--logo-spin-intensity));
+    }
+    75% {
+        /* Three-quarter turn with enhanced glow */
+        transform: rotate(270deg) translateZ(0);
+        box-shadow: 0 6px 20px rgba(255, 107, 107, calc(var(--logo-spin-shadow-intensity) + 0.1));
+    }
+    100% {
+        /* Full rotation complete */
+        transform: rotate(var(--logo-rotation-degrees)) translateZ(0);
+        box-shadow: 0 4px 15px rgba(255, 107, 107, var(--logo-spin-shadow-intensity));
+    }
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .sphere-logo {
+        animation: none;
+        /* Gentle hover effect instead of spin animation */
+        transition: transform var(--logo-transition-duration) ease,
+                   box-shadow var(--logo-transition-duration) ease;
+    }
+
+    .sphere-logo:hover {
+        animation: none;
+        transform: scale(1.15) translateZ(0);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+    }
+
+    /* Disable spin animation for users who prefer reduced motion */
+    @keyframes logo-spin {
+        0%, 100% {
+            transform: rotate(0deg) translateZ(0);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, var(--logo-spin-shadow-intensity));
+        }
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(-50%) translateX(0);
+    }
+    50% {
+        transform: translateY(-50%) translateX(-20px);
+    }
+}
+
+/* Additional Visual Enhancements */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.gallery-item:hover::before {
+    left: 100%;
+}
+
+
+/* Loading animation for images */
+.gallery-item img {
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Add some depth to sections */
+section {
+    position: relative;
+}
+
+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+}
+
+/* Enhanced navbar styling */
+.nav-menu li a {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-menu li a:hover {
+    color: #ff6b6b;
+    transform: translateY(-2px);
+}
+
+/* Pyramid container enhancements */
+.pyramid-container {
+    position: relative;
+}
+
+.pyramid-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    
+    transform: translate(-50%, -50%);
+    animation: rotate 17s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 85px;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.98);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        padding: 2rem 0;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-menu li {
+        margin: 1.2rem 0;
+    }
+
+    .nav-menu li a {
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+
+    .hero-section h1 {
+        font-size: 1.8rem;
+        font-weight: 400;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
+    }
+
+    .about-section h2,
+    .gallery-section h2 {
+        font-family: 'EB Garamond', 'Times New Roman', serif;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+
+    .gallery-container {
+        grid-template-columns: 1fr;
+    }
+
+    .header .logo-container {
+        left: 1rem;
+    }
+
+    .sphere-logo {
+        width: 35px;
+        height: 35px;
+        /* Reduce spin intensity on mobile for better performance */
+        --logo-spin-duration: 6s;
+        --logo-spin-intensity: 0.5;
+        --logo-spin-shadow-intensity: 0.3;
+        --logo-rotation-degrees: 360deg;
+    }
+
+
+    .pyramid-container::before {
+        width: 150px;
+        height: 150px;
+    }
+
+    .tiger-image {
+        position: static;
+        transform: none;
+        opacity: 0.2;
+        margin: 2rem auto;
+        text-align: center;
+    }
+
+    .tiger-image img {
+        width: 450px;
+        height: 281px;
+    }
+
+    .hero-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .hero-content {
+        margin-bottom: 2rem;
+    }
+
+    .youtube-container {
+        margin: 2rem auto 0;
+        padding: 0 1rem;
+    }
+
+    .youtube-container h3 {
+        font-size: 1.5rem;
+    }
+
+    .youtube-card {
+        margin: 1.5rem 0;
+    }
+
+    .youtube-link {
+        padding: 1rem 1.5rem;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .youtube-icon {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+
+    .youtube-info {
+        text-align: center;
+    }
+
+    .youtube-info h4 {
+        font-size: 1.1rem;
+    }
+
+    .youtube-info p {
+        font-size: 0.85rem;
+    }
+
+    .youtube-arrow {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        display: block;
+    }
+
+    .video-container {
+        margin: 2rem auto 0;
+        padding: 0 1rem;
+    }
+
+    .video-container h3 {
+        font-size: 1.5rem;
+    }
+
+    .about-video {
+        max-width: 100%;
+        border-radius: 10px;
+    }
+
+    .video-caption {
+        font-size: 0.8rem;
+        padding: 0 1rem;
+    }
+}
