@@ -9,8 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.79/build/spline-viewer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FontLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
@@ -27,21 +30,27 @@
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#gallery">Gallery</a></li>
                 <li><a href="sphere.html">3D Sphere</a></li>
-                <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="dropdown-menu">
+                <button class="dropdown-toggle" id="dropdownToggle">
+                    <span class="dropdown-text">Menu</span>
+                    <span class="dropdown-triangle">▼</span>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="#gallery">Gallery</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
         </nav>
     </header>
 
     <main class="main-content">
         <section id="home" class="hero-section">
+            <spline-viewer url="https://prod.spline.design/yYCLUL-O2buloEW3/scene.splinecode"></spline-viewer>
             <div class="hero-content">
                 <h1>Welcome to My Portfolio</h1>
                 <p>Scroll down to explore my work</p>
-            </div>
-            <div class="tiger-image">
-                <img src="assets/pigeon2.png" alt="Majestic Tiger" />
             </div>
         </section>
 

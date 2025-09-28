@@ -111,10 +111,18 @@
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="index.html#about">About</a></li>
-                <li><a href="index.html#gallery">Gallery</a></li>
                 <li><a href="sphere.html" class="active">3D Sphere</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
             </ul>
+            <div class="dropdown-menu">
+                <button class="dropdown-toggle" id="dropdownToggle">
+                    <span class="dropdown-text">Menu</span>
+                    <span class="dropdown-triangle">▼</span>
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a href="index.html#gallery">Gallery</a>
+                    <a href="index.html#contact">Contact</a>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -139,7 +147,6 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             initScene();
-            initNavbar();
         });
 
         function initScene() {
